@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 venv
 staticfiles
 ./db.sqlite3
@@ -8,11 +7,8 @@ staticfiles
 _static_root
 _bots*s
 __temp*
-__pycache__/
-*.py[cod]
 .DS_Store
 *.otreezip
-=======
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -142,4 +138,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
->>>>>>> ccfe6df57c6d9b4a36df225ceedda4afdbdee689
