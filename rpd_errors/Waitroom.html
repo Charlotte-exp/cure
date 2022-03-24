@@ -1,0 +1,97 @@
+{% block title %}
+    Wait Page
+{% endblock %}
+
+{% block content %}
+    <div id="defaultText">
+        <p>
+            Please wait until another participant is ready to interact with you in this study.
+        </p>
+        <p>
+            You will wait a maximum of 5 minutes. If no other participant arrives during this time,
+            you will not be able to make decisions in this game.
+        </p>
+        <p>
+            <b>YOU MUST STAY ON THIS PAGE AND BE READY TO PARTICIPATE</b> in order to be eligible for a bonus. <b>Thank you!
+        </b>
+    </div>
+
+    <div style="display:none;">
+        <p>
+             Time left waiting for another participant: <b><span id="time">00:00</span> </b>
+        </p>
+    </div>
+
+       <div id="newText" style="display:none">
+           <p>Looks like no-one else has turned up. We're really sorry about that. </p>
+            <p>Please use the following link to receive the show-up fee:  <b><a href="https://app.prolific.co/submissions/complete?cc=41C18628">
+                https://app.prolific.co/submissions/complete?cc=41C18628 </a></b>
+        .</p>
+       </div>
+    <br>
+
+{% endblock %}
+
+
+{% block app_scripts %}
+    <script>
+    var mins=5
+        function showNext() {
+
+
+            document.getElementById("newText").style.display = "inline";
+            document.getElementById("defaultText").style.display = "none";
+            sessionStorage.setItem("result", true);
+
+        }
+var someVarName = false;
+
+
+
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+
+    setInterval(function () {
+        var tt= parseInt( sessionStorage.getItem("someVarKey"), 10);
+
+        if(tt>0 && timer>=tt)
+        {
+            timer=parseInt(tt, 10);
+        }
+        sessionStorage.setItem("someVarKey", timer);
+
+       // console.log("check me")
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+/*
+        console.log("check me tt", tt)
+        if(tt){
+            timer=-1;
+
+        }
+*/
+        var result=sessionStorage.getItem("result")=="true"
+        if (--timer < 0 || result)  {
+            timer = duration;
+             showNext()
+        }
+    }, 1000);
+}
+
+
+    var fiveMinutes = 60 * mins;
+      var  display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+
+
+
+    </script>
+{% endblock %}
+
+
+

@@ -1,0 +1,81 @@
+{% block title %}
+    Round Decision
+{% endblock %}
+
+{% block styles %}
+
+    <script>
+        setTimeout(
+        function () {
+            alert("Please make your decision soon.");
+        },
+        90*1000 // 90 seconds
+    );
+    </script>
+
+<style>
+    .white_box {
+    padding: 10px;
+    border-radius: 5px;
+    }
+
+    .player_box {
+    padding: 10px;
+    border-radius: 5px;
+    color: red;
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="form-group required">
+    <table class="table table-bordered text-center" style="width: auto; margin: auto">
+        <tr>
+            <th colspan="2" rowspan="2"></th>
+            <th colspan="2">The Other's Choice</th>
+        </tr>
+        <tr>
+            <th><div class="player_box">1</div></th>
+            <th><div class="player_box">2</div></th>
+        </tr>
+        <tr>
+            <th rowspan="2"><span>Your Choice</span></th>
+            <td><button name="decision" value="1" class="btn btn-primary btn-large">1</button></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.reward}}</font>,
+                <font color="red">{{Constants.reward}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
+                <font color="red">{{Constants.temptation}}</font></div></td>
+        </tr>
+        <tr>
+            <td><button name="decision" value="0" class="btn btn-primary btn-large">2</button></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
+                <font color="red">{{ Constants.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
+                <font color="red">{{Constants.punishment}}</font></div></td>
+        </tr>
+    </table>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds === 10) {
+                    $('.otree-timer').show();
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

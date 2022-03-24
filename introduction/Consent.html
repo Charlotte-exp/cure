@@ -1,0 +1,48 @@
+{% block title %}
+    Consent form
+{% endblock %}
+
+
+{% block content %}
+
+<div>
+    <p>
+        The purpose of this research study is to investigate decision making.
+        In this study, you will interact anonymously with others via the computer.
+        You will be faced with a series of decision-making situations.
+        Your participation in this study will take approximately {{ Constants.session_time }} minutes.
+        If you have any questions about the study, they will be answered for you via email at coop@evolbio.mpg.de.
+    </p>
+    <p>
+        For your participation in the study, you will earn {{ participation_fee }} for simply participating.
+        In addition, you can earn an additional bonus up to £2, depending on your choices and the choices of other participants.
+    </p>
+    <p>
+        The decision-making situation will be completely anonymous and there is no possibility that you can identify
+        or be identified by any other participant, nor the researcher. Your data will be kept confidential.
+        It will be saved under an anonymous ID that does not identify you personally.
+    </p>
+    <p>
+        When the research is completed, the aggregate results of this study will be submitted for publication to a scientific journal.
+        After publication, the data files will be uploaded to a public repository, allowing other scientists to independently verify the results.
+        These publicized data files will not contain any information about the identity of the participants.
+    </p>
+    <p>
+        Participation and withdrawal: Your participation in this study is completely voluntary.
+        You may refuse to participate without penalty or loss of benefit to which you may otherwise be entitled.
+    </p>
+    <p>
+        By clicking “Next”, I confirm that I have read the description of this study, and that I give my consent to participate.
+    </p>
+    <p>
+        For questions, concerns, or suggestions about this research, please contact: Charlotte Rossetti, coop@evolbio.mpg.de.
+    </p>
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}

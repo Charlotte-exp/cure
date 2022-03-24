@@ -1,0 +1,57 @@
+{% block title %}
+    The End of the Study
+{% endblock %}
+
+{% block content %}
+
+<div class="panel panel-default" style="margin-bottom:10px">
+    <div class="panel-body">
+        The study is now over. <strong>Thank you for participating!</strong>
+        Below is your total score and the money you earned.
+        <p> </p>
+        <hr size="6" width="50%" align="center" color="black">
+    </div>
+</div>
+
+<div class="panel panel-default" style="margin-bottom:10px">
+    <div class="panel-body">
+        <table style="width:100%">
+            <tr>
+                <th>Total points earned in all rounds</th>
+                <td align="right">{{ total_payoff }}</td>
+            </tr>
+            <tr>
+                <th>Conversion rate</th>
+                <td align="right">{{ currency_per_points }}</td>
+            </tr>
+            <tr>
+                <th>Total of the bonus in GBP <span style="font-weight:normal">(paid to you in 3-5 days)</span></th>
+                <td align="right">{{ bonus }}</td>
+            </tr>
+            <tr>
+                <th>Participation payment <span style="font-weight:normal">(paid to you immediately)</span></th>
+                <td align="right"> {{ participation_fee }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="card bg-light instructions">
+    <div class="card-body">
+        <table style="width:100%">
+            <tr>
+                <th> Final Payment to you (participation payment + bonus)</th>
+                <td align="right"><font color="blue">{{ final_payment }}</font></td>
+            </tr>
+        </table>
+        <p></p>
+        <p>
+            Click on the <b>next button</b> to be redirected to Prolific and claim your payment.
+        </p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

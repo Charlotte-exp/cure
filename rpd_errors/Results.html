@@ -1,0 +1,211 @@
+{% block title %}
+    Round Outcome
+{% endblock %}
+
+{% block styles %}
+
+    <script>
+        setTimeout(
+        function () {
+            alert("Please make your decision soon.");
+        },
+        90*1000 // 90 seconds
+    );
+    </script>
+
+    <style>
+    /* (A) SHARED CLASS */
+    .blue_box {
+    padding: 10px;
+    border: 2px solid dodgerblue;
+    height: 50px;
+    width: 40px;
+    border-radius: 5px;
+    background: dodgerblue;
+    color: white;
+    }
+
+    .red_box {
+    padding: 10px;
+    border: 2px solid red;
+    height: 50px;
+    width: 40px;
+    border-radius: 5px;
+    background: red;
+    color: white;
+    }
+
+    .win_box {
+    padding: 10px;
+    border: 2px solid yellow;
+    border-radius: 5px;
+    color: black;
+    }
+
+    .white_box {
+    padding: 10px;
+    border-radius: 5px;
+    }
+
+    .play2_box {
+    padding: 10px;
+    border-radius: 5px;
+    color: red;
+    }
+
+    .play1_box {
+    padding: 10px;
+    border-radius: 5px;
+    color: dodgerblue;
+    }
+
+    </style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="form-group required">
+    <p>
+        The other player made the following choice:
+    </p>
+{% if my_decision == 1 and opponent_decision == 1 %}
+    <table class="table table-bordered text-center" style="width: auto; margin: auto">
+        <tr>
+            <th colspan="2" rowspan="2"></th>
+            <th colspan="2">The Other's Choice</th>
+        </tr>
+        <tr>
+            <th><div class="red_box">1</div></th>
+            <th><div class="play2_box">2</div></th>
+        </tr>
+        <tr>
+            <th rowspan="2"><div class="white_box">Your Choice</div></th>
+            <td><div class="blue_box">1</div></td>
+            <td><div class="win_box"><font color="dodgerblue">{{Constants.reward}}</font>,
+                <font color="red">{{Constants.reward}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
+                <font color="red">{{Constants.temptation}}</font></div></td>
+        </tr>
+        <tr>
+            <td><div class="play1_box">2</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
+                <font color="red">{{ Constants.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
+                <font color="red">{{Constants.punishment}}</font></div></td>
+        </tr>
+    </table>
+{% endif %}
+
+{% if my_decision == 1 and opponent_decision == 0 %}
+    <table class="table table-bordered text-center" style="width: auto; margin: auto">
+        <tr>
+            <th colspan="2" rowspan="2"></th>
+            <th colspan="2">The Other's Choice</th>
+        </tr>
+        <tr>
+            <th><div class="play2_box">1</div></th>
+            <th><div class="red_box">2</div></th>
+        </tr>
+        <tr>
+            <th rowspan="2"><div class="white_box">Your Choice</div></th>
+            <td><div class="blue_box">1</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.reward}}</font>,
+                <font color="red">{{Constants.reward}}</div></td>
+            <td><div class="win_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
+                <font color="red">{{Constants.temptation}}</font></div></td>
+        </tr>
+        <tr>
+            <td><div class="play1_box">2</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
+                <font color="red">{{ Constants.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
+                <font color="red">{{Constants.punishment}}</font></div></td>
+        </tr>
+    </table>
+{% endif %}
+
+{% if my_decision == 0 and opponent_decision == 1 %}
+    <table class="table table-bordered text-center" style="width: auto; margin: auto">
+        <tr>
+            <th colspan="2" rowspan="2"></th>
+            <th colspan="2">The Other's Choice</th>
+        </tr>
+        <tr>
+            <th><div class="red_box">1</div></th>
+            <th><div class="play2_box">2</div></th>
+        </tr>
+        <tr>
+            <th rowspan="2"><div class="white_box">Your Choice</div></th>
+            <td><div class="play1_box">1</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.reward}}</font>,
+                <font color="red">{{Constants.reward}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
+                <font color="red">{{Constants.temptation}}</font></div></td>
+        </tr>
+        <tr>
+            <td><div class="blue_box">2</div></td>
+            <td><div class="win_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
+                <font color="red">{{ Constants.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
+                <font color="red">{{Constants.punishment}}</font></div></td>
+        </tr>
+    </table>
+{% endif %}
+
+{% if my_decision == 0 and opponent_decision == 0 %}
+    <table class="table table-bordered text-center" style="width: auto; margin: auto">
+        <tr>
+            <th colspan="2" rowspan="2"></th>
+            <th colspan="2">The Other's Choice</th>
+        </tr>
+        <tr>
+            <th><div class="play2_box">1</div></th>
+            <th><div class="red_box">2</div></th>
+        </tr>
+        <tr>
+            <th rowspan="2"><div class="pwhite_box">Your Choice</div></th>
+            <td><div class="play1_box">1</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.reward}}</font>,
+                <font color="red">{{Constants.reward}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
+                <font color="red">{{Constants.temptation}}</font></div></td>
+        </tr>
+        <tr>
+            <td><div class="blue_box">2</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
+                <font color="red">{{ Constants.sucker }}</font></div></td>
+            <td><div class="win_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
+                <font color="red">{{Constants.punishment}}</font></div></td>
+        </tr>
+    </table>
+{% endif %}
+</div>
+
+<p>
+    <div style="display: flex; justify-content: flex-end">
+    {% next_button %}
+    </div>
+</p>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds === 10) {
+                    $('.otree-timer').show();
+                }
+            });
+        });
+    </script>
+
+{% endbloc

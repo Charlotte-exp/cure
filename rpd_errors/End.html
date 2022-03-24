@@ -1,0 +1,39 @@
+{% block title %}
+    Final results
+{% endblock %}
+
+{% block content %}
+
+<div class="card-body">
+    <p>
+        Here are your total points across all rounds.
+    </p>
+    <table class="table">
+        <tr>
+            <th>Round</th>
+            <th>My outcome</th>
+            <th>Other player's outcome</th>
+
+        </tr>
+        {% for p in player_in_all_rounds %}
+            <tr>
+                <td>{{ p.round_number }}</td>
+                <td>{{ p.payoff }} pts</td>
+                <td>{{ p.get_opponent.payoff }} pts</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <p>
+        In this Task, across all rounds, you earned a total of <b>{{ total_payoff }}</b> points.
+    </p>
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+
+{% endblock %}
