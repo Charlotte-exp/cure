@@ -181,9 +181,8 @@ class ResultsWaitPage(WaitPage):
     results page.
     I use a template for some special text rather than just the body_text variable.
     """
-
+    template_name = 'rpd_errors/ResultsWaitPage.html'
     after_all_players_arrive = set_payoffs
-    template_name = 'control_PD/ResultsWaitPage.html'
 
     def is_displayed(player: Player):
         """
@@ -209,6 +208,7 @@ class Results(Page):
             return False
         elif player.round_number <= player.participant.last_round:
             return True
+
     timer_text = 'You are about to be automatically moved to the next results summary page'
     timeout_seconds = 2 * 60
 
