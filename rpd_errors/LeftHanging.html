@@ -1,9 +1,9 @@
-{% block title %}
+{{ block title }}
     Dropouts
-{% endblock %}
-{% block content %}
+{{ endblock }}
+{{ block content }}
 
-{% if player.left_hanging == 1 %}
+{{ if player.left_hanging == 1 }}
     <div>
         <p>
             Looks like the other participant left the study. We're really sorry about that.
@@ -16,10 +16,10 @@
         </p>
    </div>
 
-{% else %}
+{{ else }}
     <div>
         <p>You were inactive too long and the program assumed you dropped out. Thus the game was ended.</p>
    </div>
-{% endif %}
+{{ endif }}
 
-{% endblock %}
+{{ endblock }}

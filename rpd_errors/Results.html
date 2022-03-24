@@ -1,8 +1,8 @@
-{% block title %}
+{{ block title }}
     Round Outcome
-{% endblock %}
+{{ endblock }}
 
-{% block styles %}
+{{ block styles }}
 
     <script>
         setTimeout(
@@ -61,15 +61,15 @@
 
     </style>
 
-{% endblock %}
+{{ endblock }}
 
-{% block content %}
+{{ block content }}
 
 <div class="form-group required">
     <p>
         The other player made the following choice:
     </p>
-{% if my_decision == 1 and opponent_decision == 1 %}
+{{ if my_decision == 1 and co_player_decision == 1 }}
     <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
             <th colspan="2" rowspan="2"></th>
@@ -82,22 +82,22 @@
         <tr>
             <th rowspan="2"><div class="white_box">Your Choice</div></th>
             <td><div class="blue_box">1</div></td>
-            <td><div class="win_box"><font color="dodgerblue">{{Constants.reward}}</font>,
-                <font color="red">{{Constants.reward}}</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
-                <font color="red">{{Constants.temptation}}</font></div></td>
+            <td><div class="win_box"><font color="dodgerblue">{{C.reward}}</font>,
+                <font color="red">{{C.reward}}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
+                <font color="red">{{C.temptation}}</font></div></td>
         </tr>
         <tr>
             <td><div class="play1_box">2</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
-                <font color="red">{{ Constants.sucker }}</font></div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
-                <font color="red">{{Constants.punishment}}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
+                <font color="red">{{ C.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
+                <font color="red">{{C.punishment}}</font></div></td>
         </tr>
     </table>
-{% endif %}
+{{ endif }}
 
-{% if my_decision == 1 and opponent_decision == 0 %}
+{{ if my_decision == 1 and co_player_decision == 0 }}
     <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
             <th colspan="2" rowspan="2"></th>
@@ -110,22 +110,22 @@
         <tr>
             <th rowspan="2"><div class="white_box">Your Choice</div></th>
             <td><div class="blue_box">1</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.reward}}</font>,
-                <font color="red">{{Constants.reward}}</div></td>
-            <td><div class="win_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
-                <font color="red">{{Constants.temptation}}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
+                <font color="red">{{C.reward}}</font></div></td>
+            <td><div class="win_box"><font color="dodgerblue">{{ C.sucker }}</font>,
+                <font color="red">{{C.temptation}}</font></div></td>
         </tr>
         <tr>
             <td><div class="play1_box">2</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
-                <font color="red">{{ Constants.sucker }}</font></div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
-                <font color="red">{{Constants.punishment}}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
+                <font color="red">{{ C.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
+                <font color="red">{{C.punishment}}</font></div></td>
         </tr>
     </table>
-{% endif %}
+{{ endif }}
 
-{% if my_decision == 0 and opponent_decision == 1 %}
+{{ if my_decision == 0 and co_player_decision == 1 }}
     <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
             <th colspan="2" rowspan="2"></th>
@@ -138,22 +138,22 @@
         <tr>
             <th rowspan="2"><div class="white_box">Your Choice</div></th>
             <td><div class="play1_box">1</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.reward}}</font>,
-                <font color="red">{{Constants.reward}}</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
-                <font color="red">{{Constants.temptation}}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
+                <font color="red">{{C.reward}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
+                <font color="red">{{C.temptation}}</font></div></td>
         </tr>
         <tr>
             <td><div class="blue_box">2</div></td>
-            <td><div class="win_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
-                <font color="red">{{ Constants.sucker }}</font></div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
-                <font color="red">{{Constants.punishment}}</font></div></td>
+            <td><div class="win_box"><font color="dodgerblue">{{C.temptation}}</font>,
+                <font color="red">{{ C.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
+                <font color="red">{{C.punishment}}</font></div></td>
         </tr>
     </table>
-{% endif %}
+{{ endif }}
 
-{% if my_decision == 0 and opponent_decision == 0 %}
+{{ if my_decision == 0 and co_player_decision == 0 }}
     <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
             <th colspan="2" rowspan="2"></th>
@@ -166,31 +166,31 @@
         <tr>
             <th rowspan="2"><div class="pwhite_box">Your Choice</div></th>
             <td><div class="play1_box">1</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.reward}}</font>,
-                <font color="red">{{Constants.reward}}</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
-                <font color="red">{{Constants.temptation}}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
+                <font color="red">{{C.reward}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
+                <font color="red">{{C.temptation}}</font></div></td>
         </tr>
         <tr>
             <td><div class="blue_box">2</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
-                <font color="red">{{ Constants.sucker }}</font></div></td>
-            <td><div class="win_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
-                <font color="red">{{Constants.punishment}}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
+                <font color="red">{{ C.sucker }}</font></div></td>
+            <td><div class="win_box"><font color="dodgerblue">{{C.punishment}}</font>,
+                <font color="red">{{C.punishment}}</font></div></td>
         </tr>
     </table>
-{% endif %}
+{{ endif }}
 </div>
 
 <p>
     <div style="display: flex; justify-content: flex-end">
-    {% next_button %}
+    {{ next_button }}
     </div>
 </p>
 
-{% endblock %}
+{{ endblock }}
 
-{% block scripts %}
+{{ block scripts }}
 
     <style>
         .otree-timer {
@@ -208,4 +208,4 @@
         });
     </script>
 
-{% endbloc
+{{ endbloc

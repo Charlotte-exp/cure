@@ -1,8 +1,8 @@
-{% block title %}
+{{ block title }}
     Instructions
-{% endblock %}
+{{ endblock }}
 
-{% block styles %}
+{{ block styles }}
 
 <style>
     /* (A) SHARED CLASS */
@@ -45,10 +45,10 @@
     }
 </style>
 
- {% endblock %}
+ {{ endblock }}
 
 
-{% block content %}
+{{ block content }}
 <style>
 /* (A) SHARED CLASS */
 .box {
@@ -71,14 +71,14 @@ color: white;
             The total number of rounds is randomly determined.
             After each round, there is a {{ delta }}% probability
             that the interaction with the same person will continue for at least another round.
-            {% if Constants.proba_next_round == 0.5 %}
+            {{ if C.proba_next_round == 0.5 }}
             This is as if we would roll a four sided dice: if a 1 or a 2 comes up, the game ends after this round,
             but if a 3 or 4 comes up, the game continues for at least another round.
-            {% endif %}
-            {% if Constants.proba_next_round == 0.75 %}
+            {{ endif }}
+            {{ if C.proba_next_round == 0.75 }}
             This is as if we would roll a four sided dice: if a 1 comes up, the game ends after this round,
             but if a 2, 3, or 4 comes up, the game continues for at least another round.
-            {% endif %}
+            {{ endif }}
             So, for instance, if you are in round 2,
             the probability there will be a another round is {{ delta }}% and if you are in round 9,
             the probability there will be another round is also {{ delta }}%.
@@ -101,17 +101,17 @@ color: white;
         <tr>
             <th rowspan="2"><div class="white_box">Your Choice</div></th>
             <td><div class="blue_box">1</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.reward}}</font>,
-                <font color="red">{{Constants.reward}}</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
-                <font color="red">{{Constants.temptation}}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
+                <font color="red">{{C.reward}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
+                <font color="red">{{C.temptation}}</font></div></td>
         </tr>
         <tr>
             <td><div class="blue_box">2</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
-                <font color="red">{{ Constants.sucker }}</font></div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
-                <font color="red">{{Constants.punishment}}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
+                <font color="red">{{ C.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
+                <font color="red">{{C.punishment}}</font></div></td>
         </tr>
     </table>
     </div>
@@ -134,15 +134,15 @@ color: white;
     </p>
     <ul>
         <li>
-            You select 1 and the other selects 1, you each make {{Constants.reward}}.
+            You select 1 and the other selects 1, you each make {{C.reward}}.
         </li>
         <li>
-            You select 1 and the other selects 2, you make {{ Constants.sucker }} while the other makes {{Constants.temptation}}.
+            You select 1 and the other selects 2, you make {{ C.sucker }} while the other makes {{C.temptation}}.
         </li>
         <li>
-            You select 2 and the other selects 1, you make {{Constants.temptation}} while the other makes {{ Constants.sucker }}.
+            You select 2 and the other selects 1, you make {{C.temptation}} while the other makes {{ C.sucker }}.
         <li>
-            You select 2 and the other selects 2, you each make {{Constants.punishment}}.
+            You select 2 and the other selects 2, you each make {{C.punishment}}.
         </li>
     </ul>
     <p>
@@ -155,8 +155,8 @@ color: white;
 
     <p>
         <div style="display: flex; justify-content: flex-end">
-        {% next_button %}
+        {{ next_button }}
         </div>
     </p>
 
-{% endblock %}
+{{ endblock }}

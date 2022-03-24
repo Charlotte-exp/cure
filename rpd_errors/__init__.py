@@ -132,9 +132,7 @@ class Decision(Page):
         This page is displayed only if the player is neither left hanging (1) nor a dropout (2).
         And only for the number of rounds assigned to the group by the random number function.
         """
-        if player.left_hanging == 1:
-            return False
-        elif player.left_hanging == 2:
+        if player.left_hanging == 1 or player.left_hanging == 2:
             return False
         elif player.round_number <= player.participant.last_round:
             return True
@@ -166,7 +164,6 @@ class Decision(Page):
         if player.round_number > 1:
             return {
                 'round_number': player.round_number,
-
                 'co_player_previous_decision': co_player.in_round(player.round_number - 1).decision,
                 'previous_decision': me.in_round(player.round_number - 1).decision,
             }
@@ -207,9 +204,7 @@ class Results(Page):
         This page is displayed only if the player is neither left hanging (1) or a dropout (2).
         And only for the number of rounds assigned to the group by the random number function.
         """
-        if player.left_hanging == 1:
-            return False
-        elif player.left_hanging == 2:
+        if player.left_hanging == 1 or player.left_hanging == 2:
             return False
         elif player.round_number <= player.participant.last_round:
             return True
@@ -241,9 +236,7 @@ class Previous(Page):
         This page is displayed only if the player is neither left hanging (1) or a dropout (2).
         And only for the number of rounds assigned to the group by the random number function.
         """
-        if player.left_hanging == 1:
-            return False
-        elif player.left_hanging == 2:
+        if player.left_hanging == 1 or player.left_hanging == 2:
             return False
         elif player.round_number <= player.participant.last_round:
             return True
@@ -276,9 +269,7 @@ class End(Page):
         This page is displayed only if the player is neither left hanging (1) or a dropout (2).
         And only appears on the last round.
         """
-        if player.left_hanging == 1:
-            return False
-        elif player.left_hanging == 2:
+        if player.left_hanging == 1 or player.left_hanging == 2:
             return False
         elif player.round_number == participant.last_round:
             return True
@@ -307,9 +298,7 @@ class Demographics(Page):
         This page is displayed only if the player is neither left hanging (1) or a dropout (2).
         And only appears on the last round.
         """
-        if player.left_hanging == 1:
-            return False
-        elif player.left_hanging == 2:
+        if player.left_hanging == 1 or player.left_hanging == 2:
             return False
         elif player.round_number == player.participant.last_round:
             return True
@@ -321,9 +310,7 @@ class CommentBox(Page):
 
     def is_displayed(player: Player):
         """ This function makes the page appear only on the last random-ish round """
-        if player.left_hanging == 1:
-            return False
-        elif player.left_hanging == 2:
+        if player.left_hanging == 1 or player.left_hanging == 2:
             return False
         elif player.round_number == player.participant.last_round:
             return True
@@ -341,9 +328,7 @@ class Payment(Page):
         This page is displayed only if the player is neither left hanging (1) or a dropout (2).
         And only appears on the last round.
         """
-        if player.left_hanging == 1:
-            return False
-        elif player.left_hanging == 2:
+        if player.left_hanging == 1 or player.left_hanging == 2:
             return False
         elif player.round_number == player.participant.last_round:
             return True
@@ -377,9 +362,7 @@ class LeftHanging(Page):
 
     def is_displayed(player: Player):
         """ This page is displayed only if the player is either left hanging (1) or a dropout (2)."""
-        if player.left_hanging == 1:
-            return True
-        elif player.left_hanging == 2:
+        if player.left_hanging == 1 or player.left_hanging == 2:
             return True
 
 
@@ -401,11 +384,9 @@ page_sequence = [
     Results,
     # Previous,
     End,
-    Demographics,
-    CommentBox,
+    # Demographics,
+    # CommentBox,
     Payment,
     LeftHanging,
     ProlificLink,
 ]
-
-page_sequence = [MyPage, ResultsWaitPage, Results]
