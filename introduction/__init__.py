@@ -22,10 +22,10 @@ class C(BaseConstants):
     Matrix format payoffs
     temptation = betray, sucker = betrayed, reward = both cooperate, punishment = both defect 
     """
-    temptation = cu(50)
-    sucker = cu(12)
-    reward = cu(26)
-    punishment = cu(25)
+    temptation = cu(0.25)
+    sucker = cu(0)
+    reward = cu(0.15)
+    punishment = cu(0.05)
 
 
 class Subsession(BaseSubsession):
@@ -37,7 +37,8 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+
+    errors = models.StringField()
 
 
 # Functions

@@ -113,8 +113,9 @@ color: white;
             <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
                 <font color="red">{{C.punishment}}</font></div></td>
         </tr>
-    </table>
+        </table>
     </div>
+    <br>
     <p>
         The first entry in each cell represents your payoff (in points),
         while the second entry represents the payoff of the person you are interacting with.
@@ -134,15 +135,17 @@ color: white;
     </p>
     <ul>
         <li>
-            You select 1 and the other selects 1, you each make {{C.reward}}.
+            You select 1 and the other selects 1, you each make <b>{{C.reward}}</b>.
         </li>
         <li>
-            You select 1 and the other selects 2, you make {{ C.sucker }} while the other makes {{C.temptation}}.
+            You select 1 and the other selects 2, you make <b>{{ C.sucker }}</b>
+            while the other makes <b>{{C.temptation}}</b>.
         </li>
         <li>
-            You select 2 and the other selects 1, you make {{C.temptation}} while the other makes {{ C.sucker }}.
+            You select 2 and the other selects 1, you make <b>{{C.temptation}}</b>
+            while the other makes <b>{{ C.sucker }}</b>.
         <li>
-            You select 2 and the other selects 2, you each make {{C.punishment}}.
+            You select 2 and the other selects 2, you each make <b>{{C.punishment}}</b>.
         </li>
     </ul>
     <p>

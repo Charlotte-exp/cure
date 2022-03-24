@@ -22,14 +22,24 @@ class C(BaseConstants):
     Matrix format payoffs
     temptation = betray, sucker = betrayed, reward = both cooperate, punishment = both defect 
     """
-    temptation = cu(50)
-    sucker = cu(12)
-    reward = cu(26)
-    punishment = cu(25)
+    temptation = cu(0.25)
+    sucker = cu(0)
+    reward = cu(0.15)
+    punishment = cu(0.05)
 
 
 class Subsession(BaseSubsession):
-    pass
+
+    def get_random_number_of_rounds(self):
+        """
+        Creating the random-ish number of rounds a group plays for. PP plays for at least 20 rounds (set on constants),
+        then they have a 50% chance of another round, and then again 50% chance of another round.
+        This function creates a last round number following this method.
+        """
+        number_of_rounds = C.min_rounds
+        while C.proba_next_round > random.random():
+            number_of_rounds += 1
+        return number_of_rounds
 
 
 class Group(BaseGroup):
@@ -39,7 +49,7 @@ class Group(BaseGroup):
 class Player(BasePlayer):
 
     last_round = models.IntegerField()
-    left_hanging = models.CurrencyField()
+    left_hanging = models.CurrencyField(initial=0)
 
     decision = models.IntegerField(
             choices=[
@@ -52,22 +62,12 @@ class Player(BasePlayer):
 
 
 ### FUNCTIONS
-def get_random_number_of_rounds(self):
-    """
-    Creating the random-ish number of rounds a group plays for. PP plays for at least 20 rounds (set on constants),
-    then they have a 50% chance of another round, and then again 50% chance of another round.
-    This function creates a last round number following this method.
-    """
-    number_of_rounds = C.min_rounds
-    while C.proba_next_round > random.random():
-        number_of_rounds += 1
-    return number_of_rounds
-
 
 def group_by_arrival_time_method(subsession, waiting_players):
-    players = [p for p in waiting_players]
-    if len(waiting_players) >= 2:
-        players = [players[0], players[1]]
+    players_zero = [p for p in waiting_players if p.participant.errors == '0%']
+    players_five = [p for p in waiting_players if p.participant.errors == '5%']
+    if len(players_zero) >= 1 and len(players_five) >= 1:
+        players = [players_zero[0], players_five[0]]
         last_round = subsession.get_random_number_of_rounds()
         for p in players:
             p.participant.last_round = last_round
@@ -92,7 +92,8 @@ def get_payoff(player: Player):
                 0: C.punishment
             }
     }
-    player.payoff = payoff_matrix[player.decision][player.other_player.decision]
+    co_player = other_player(player)
+    player.payoff = payoff_matrix[player.decision][co_player.decision]
 
 
 def set_payoffs(group: Group):
@@ -148,7 +149,7 @@ class Decision(Page):
         Decisions for the missed round are automatically filled to avoid an NONE type error.
         """
         me = player
-        co_player = me.other_player
+        co_player = other_player(player)
         if timeout_happened:
             co_player.left_hanging = 1
             me.left_hanging = 2
@@ -160,7 +161,7 @@ class Decision(Page):
         The variables are inserted into calculation or specifications and given a display name used in the HTML.
         """
         me = player
-        co_player = me.other_player
+        co_player = other_player(player)
         if player.round_number > 1:
             return {
                 'round_number': player.round_number,
@@ -217,7 +218,7 @@ class Results(Page):
         The variables are inserted into calculation or specifications and given a display name used in the HTML.
         """
         me = player
-        co_player = me.other_player
+        co_player = other_player(player)
         return {
             'my_decision': me.decision,
             'co_player_decision': co_player.decision,
@@ -250,7 +251,7 @@ class Previous(Page):
         The variables are inserted into calculation or specifications and given a display name used in the HTML.
         """
         me = player
-        co_player = me.other_player
+        co_player = other_player(player)
         return {
             'my_decision': me.decision,
             'co_player_decision': co_player.decision,
@@ -271,7 +272,7 @@ class End(Page):
         """
         if player.left_hanging == 1 or player.left_hanging == 2:
             return False
-        elif player.round_number == participant.last_round:
+        elif player.round_number == player.participant.last_round:
             return True
 
     def vars_for_template(player: Player):
@@ -279,12 +280,10 @@ class End(Page):
         This function is for displaying variables in the HTML file using Django.
         The variables are inserted into calculation or specifications and given a display name used in the HTML.
         """
-        me = player
-        co_player = player.other_player
+        # co_player = other_player(player)
         return {
-            'player_in_all_rounds': me.in_all_rounds(),
-            'co_player_in_all_rounds': co_player.in_all_rounds(),
-            'total_payoff': sum([p.payoff for p in me.in_all_rounds()]),
+            'player_in_all_rounds': player.in_all_rounds(),
+            'total_payoff': sum([p.payoff for p in player.in_all_rounds()]),
         }
 
 
