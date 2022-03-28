@@ -1,8 +1,8 @@
-{% block title %}
+{{ block title }}
     Round Decision
-{% endblock %}
+{{ endblock }}
 
-{% block styles %}
+{{ block styles }}
 
     <script>
         setTimeout(
@@ -26,9 +26,9 @@
     }
 </style>
 
-{% endblock %}
+{{ endblock }}
 
-{% block content %}
+{{ block content }}
 
 <div class="form-group required">
     <table class="table table-bordered text-center" style="width: auto; margin: auto">
@@ -43,24 +43,24 @@
         <tr>
             <th rowspan="2"><span>Your Choice</span></th>
             <td><button name="decision" value="1" class="btn btn-primary btn-large">1</button></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.reward}}</font>,
-                <font color="red">{{Constants.reward}}</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{ Constants.sucker }}</font>,
-                <font color="red">{{Constants.temptation}}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
+                <font color="red">{{C.reward}}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
+                <font color="red">{{C.temptation}}</font></div></td>
         </tr>
         <tr>
             <td><button name="decision" value="0" class="btn btn-primary btn-large">2</button></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.temptation}}</font>,
-                <font color="red">{{ Constants.sucker }}</font></div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{Constants.punishment}}</font>,
-                <font color="red">{{Constants.punishment}}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
+                <font color="red">{{ C.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
+                <font color="red">{{C.punishment}}</font></div></td>
         </tr>
     </table>
 </div>
 
-{% endblock %}
+{{ endblock }}
 
-{% block scripts %}
+{{ block scripts }}
 
     <style>
         .otree-timer {
@@ -78,4 +78,4 @@
         });
     </script>
 
-{% endblock %}
+{{ endblock }}

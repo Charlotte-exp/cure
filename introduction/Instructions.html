@@ -1,0 +1,165 @@
+{{ block title }}
+    Instructions
+{{ endblock }}
+
+{{ block styles }}
+
+<style>
+    /* (A) SHARED CLASS */
+    .blue_box {
+    padding: 10px;
+    border: 2px solid dodgerblue;
+    height: 50px;
+    width: 40px;
+    border-radius: 5px;
+    background: dodgerblue;
+    color: white;
+    }
+
+    .red_box {
+    padding: 10px;
+    border: 2px solid red;
+    height: 50px;
+    width: 40px;
+    border-radius: 5px;
+    background: red;
+    color: white;
+    }
+
+    .win_box {
+    padding: 10px;
+    border: 2px solid yellow;
+    border-radius: 5px;
+    color: black;
+    }
+
+    .white_box {
+    padding: 10px;
+    border-radius: 5px;
+    }
+
+    .player_box {
+    padding: 10px;
+    border-radius: 5px;
+    color: red;
+    }
+</style>
+
+ {{ endblock }}
+
+
+{{ block content }}
+<style>
+/* (A) SHARED CLASS */
+.box {
+padding: 10px;
+border: 2px solid dodgerblue;
+border-radius: 5px;
+background: dodgerblue;
+color: white;
+}
+</style>
+
+<div>
+    <ol>
+        <li>
+            In this experiment you will be asked to make decisions in several rounds.
+            You will be randomly paired with another person for a sequence of rounds.
+        </li>
+        <p></p>
+        <li>
+            The total number of rounds is randomly determined.
+            After each round, there is a {{ delta }}% probability
+            that the interaction with the same person will continue for at least another round.
+            {{ if C.proba_next_round == 0.5 }}
+            This is as if we would roll a four sided dice: if a 1 or a 2 comes up, the game ends after this round,
+            but if a 3 or 4 comes up, the game continues for at least another round.
+            {{ endif }}
+            {{ if C.proba_next_round == 0.75 }}
+            This is as if we would roll a four sided dice: if a 1 comes up, the game ends after this round,
+            but if a 2, 3, or 4 comes up, the game continues for at least another round.
+            {{ endif }}
+            So, for instance, if you are in round 2,
+            the probability there will be a another round is {{ delta }}% and if you are in round 9,
+            the probability there will be another round is also {{ delta }}%.
+        </li>
+        <p></p>
+        <li>
+            The choices and the payoffs in each round are as follows:
+        </li>
+    </ol>
+    <div class="form-group required">
+        <table class="table table-bordered text-center" style="width: auto; margin: auto">
+        <tr>
+            <th colspan="2" rowspan="2"></th>
+            <th colspan="2">The Other's Choice</th>
+        </tr>
+        <tr>
+            <th><div class="player_box">1</div></th>
+            <th><div class="player_box">2</div></th>
+        </tr>
+        <tr>
+            <th rowspan="2"><div class="white_box">Your Choice</div></th>
+            <td><div class="blue_box">1</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
+                <font color="red">{{C.reward}}</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
+                <font color="red">{{C.temptation}}</font></div></td>
+        </tr>
+        <tr>
+            <td><div class="blue_box">2</div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
+                <font color="red">{{ C.sucker }}</font></div></td>
+            <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
+                <font color="red">{{C.punishment}}</font></div></td>
+        </tr>
+        </table>
+    </div>
+    <br>
+    <p>
+        The first entry in each cell represents your payoff (in points),
+        while the second entry represents the payoff of the person you are interacting with.
+        You make your choice by clicking directly on the blue box titled 1 for Option 1,
+        and 2 for Option 2.
+    </p>
+    <p>
+        At the end of the experiment you will be paid £{{ currency_per_points }} for every point scored for your bonus.
+    </p>
+    <p>
+        As you can see, this shows the payoff associated with each choice.
+        Once you and the person you are paired with have made your choices,
+        your payoff for the round will appear.
+    </p>
+    <p>
+        That is, if:
+    </p>
+    <ul>
+        <li>
+            You select 1 and the other selects 1, you each make <b>{{C.reward}}</b>.
+        </li>
+        <li>
+            You select 1 and the other selects 2, you make <b>{{ C.sucker }}</b>
+            while the other makes <b>{{C.temptation}}</b>.
+        </li>
+        <li>
+            You select 2 and the other selects 1, you make <b>{{C.temptation}}</b>
+            while the other makes <b>{{ C.sucker }}</b>.
+        <li>
+            You select 2 and the other selects 2, you each make <b>{{C.punishment}}</b>.
+        </li>
+    </ul>
+    <p>
+        Before we start, recall again that the total number of rounds is randomly determined.
+        After each round, there is a {{ delta }}% probability that the interaction will continue for at least another round.
+        You will play with the same person for the entire interaction.
+    </p>
+
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {{ next_button }}
+        </div>
+    </p>
+
+{{ endblock }}

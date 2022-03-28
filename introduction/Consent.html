@@ -1,5 +1,11 @@
 {% block title %}
-    Consent form
+
+    <div style="display: flex; justify-content: flex-end">
+        <img src="{{ static 'introduction/mpi.png'}}" width="auto" height="100"/>
+    </div>
+
+    Welcome
+
 {% endblock %}
 
 
@@ -7,11 +13,12 @@
 
 <div>
     <p>
+        We are researchers at the Max Planck Institute in Plön, Germany studying human decision-making.
+    </p>
+    <p>
         The purpose of this research study is to investigate decision making.
-        In this study, you will interact anonymously with others via the computer.
-        You will be faced with a series of decision-making situations.
-        Your participation in this study will take approximately {{ Constants.session_time }} minutes.
-        If you have any questions about the study, they will be answered for you via email at coop@evolbio.mpg.de.
+        You will interact anonymously with who are also taking part in this study.
+        The study will take approximately {{ C.session_time }} minutes.
     </p>
     <p>
         For your participation in the study, you will earn {{ participation_fee }} for simply participating.
@@ -32,10 +39,16 @@
         You may refuse to participate without penalty or loss of benefit to which you may otherwise be entitled.
     </p>
     <p>
-        By clicking “Next”, I confirm that I have read the description of this study, and that I give my consent to participate.
+        By clicking “Next”, I confirm that I have read the description of this study and that I give my consent to participate.
     </p>
     <p>
-        For questions, concerns, or suggestions about this research, please contact: Charlotte Rossetti, coop@evolbio.mpg.de.
+        For questions, concerns, or suggestions about this research, please contact: <br>
+        <a href="mailto:coop@evolbio.mpg.de"> coop@evolbio.mpg.de </a>
+    </p>
+    <p>
+        Charlotte Rossetti <br> Max Planck Institute for Evolutionary Biology, Germany <br>
+        <img src="{{ static 'introduction/signature.png'}}" width="auto" height="100"/>
+
     </p>
 </div>
 

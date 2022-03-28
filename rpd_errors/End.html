@@ -1,8 +1,8 @@
-{% block title %}
+{{ block title }}
     Final results
-{% endblock %}
+{{ endblock }}
 
-{% block content %}
+{{ block content }}
 
 <div class="card-body">
     <p>
@@ -15,13 +15,13 @@
             <th>Other player's outcome</th>
 
         </tr>
-        {% for p in player_in_all_rounds %}
+        {{ for p in player_in_all_rounds }}
             <tr>
                 <td>{{ p.round_number }}</td>
-                <td>{{ p.payoff }} pts</td>
-                <td>{{ p.get_opponent.payoff }} pts</td>
+                <td>{{ p.payoff }}</td>
+                <td>{{ p.other_player.payoff }}</td>
             </tr>
-        {% endfor %}
+        {{ endfor }}
     </table>
 
     <p>
@@ -31,9 +31,9 @@
 
     <p>
         <div style="display: flex; justify-content: flex-end">
-        {% next_button %}
+        {{ next_button }}
         </div>
     </p>
 
 
-{% endblock %}
+{{ endblock }}
