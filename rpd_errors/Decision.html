@@ -42,14 +42,14 @@
         </tr>
         <tr>
             <th rowspan="2"><span>Your Choice</span></th>
-            <td><button name="decision" value="1" class="btn btn-primary btn-large">1</button></td>
+            <td><button name="observed_decision" value="1" class="btn btn-primary btn-large">1</button></td>
             <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
                 <font color="red">{{C.reward}}</font></div></td>
             <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
                 <font color="red">{{C.temptation}}</font></div></td>
         </tr>
         <tr>
-            <td><button name="decision" value="0" class="btn btn-primary btn-large">2</button></td>
+            <td><button name="observed_decision" value="0" class="btn btn-primary btn-large">2</button></td>
             <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
                 <font color="red">{{ C.sucker }}</font></div></td>
             <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
@@ -57,6 +57,8 @@
         </tr>
     </table>
 </div>
+
+<p style="color:white;">{{ call }}</p>
 
 {{ endblock }}
 

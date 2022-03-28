@@ -1,11 +1,11 @@
 from otree.api import *
 
+import random
 
 doc = """
         Your app description
         """
 
-import random
 
 class C(BaseConstants):
     NAME_IN_URL = 'rpd_errors'
@@ -13,8 +13,10 @@ class C(BaseConstants):
     NUM_ROUNDS = 50
 
     """ variables for randomish end round, used in the intro app at the mo"""
-    min_rounds = 1
+    min_rounds = 2
     proba_next_round = 0.50
+
+    error_rate = 0.50
 
     conversion = '20pts = £0.05'
 
@@ -48,27 +50,40 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 
+    errors = models.BooleanField(initial=False)
     last_round = models.IntegerField()
-    left_hanging = models.CurrencyField(initial=0)
+    left_hanging = models.IntegerField(initial=0)
 
-    decision = models.IntegerField(
+    true_decision = models.IntegerField()
+    observed_decision = models.IntegerField(
             choices=[
                 [1, '1'],
                 [0, '2'],
             ],
-            doc="""This player's decision""",
+            doc="""This player's true_decision""",
             widget=widgets.RadioSelect
         )
+
+    def get_errors(player):
+        """
+        on every round, this function is called.
+        A random number is drawn and if it is smaller than 0.05 then the field 'errors' is set to True.
+        """
+        if C.error_rate > random.random():
+            player.errors = True
+            print("error is", player.errors)
+        return player.errors
 
 
 ### FUNCTIONS
 
 def group_by_arrival_time_method(subsession, waiting_players):
-    players_zero = [p for p in waiting_players if p.participant.errors == '0%']
-    players_five = [p for p in waiting_players if p.participant.errors == '5%']
+    players_zero = [p for p in waiting_players if p.participant.condition == '0%']
+    players_five = [p for p in waiting_players if p.participant.condition == '5%']
     if len(players_zero) >= 1 and len(players_five) >= 1:
         players = [players_zero[0], players_five[0]]
         last_round = subsession.get_random_number_of_rounds()
+        print(players)
         for p in players:
             p.participant.last_round = last_round
             p.last_round = p.participant.last_round
@@ -93,7 +108,7 @@ def get_payoff(player: Player):
             }
     }
     co_player = other_player(player)
-    player.payoff = payoff_matrix[player.decision][co_player.decision]
+    player.payoff = payoff_matrix[player.observed_decision][co_player.observed_decision]
 
 
 def set_payoffs(group: Group):
@@ -126,7 +141,10 @@ class Decision(Page):
     There is a timer to check for dropouts. If one of the players' timer runs out the others are linked back to prolific
     """
     form_model = 'player'
-    form_fields = ['decision']
+    form_fields = ['observed_decision']
+
+    timer_text = 'If you stay inactive for too long you will be considered a dropout:'
+    timeout_seconds = 2 * 60
 
     def is_displayed(player: Player):
         """
@@ -138,23 +156,6 @@ class Decision(Page):
         elif player.round_number <= player.participant.last_round:
             return True
 
-    timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    timeout_seconds = 2 * 60
-
-    def before_next_page(player, timeout_happened):
-        """
-        Dropout check code! If the timer set above runs out, all the other players in the group become left_hanging = 1
-        and are jumped to the leftHanging page with a link to Prolific. The dropout also goes to that page but gets
-        a different text (left_hanging = 2).
-        Decisions for the missed round are automatically filled to avoid an NONE type error.
-        """
-        me = player
-        co_player = other_player(player)
-        if timeout_happened:
-            co_player.left_hanging = 1
-            me.left_hanging = 2
-            me.decision = 1
-
     def vars_for_template(player: Player):
         """
         This function is for displaying variables in the HTML file using Django.
@@ -164,14 +165,36 @@ class Decision(Page):
         co_player = other_player(player)
         if player.round_number > 1:
             return {
+                'call': player.get_errors(),
                 'round_number': player.round_number,
-                'co_player_previous_decision': co_player.in_round(player.round_number - 1).decision,
-                'previous_decision': me.in_round(player.round_number - 1).decision,
+                'co_player_previous_decision': co_player.in_round(player.round_number - 1).true_decision,
+                'previous_decision': me.in_round(player.round_number - 1).true_decision,
             }
         else:
             return {
+                'call': player.get_errors(),
                 'round_number': player.round_number,
             }
+
+    def before_next_page(player, timeout_happened):
+        """
+        Dropout check code! If the timer set above runs out, all the other players in the group become left_hanging = 1
+        and are jumped to the leftHanging page with a link to Prolific. The dropout also goes to that page but gets
+        a different text (left_hanging = 2).
+        Decisions for the missed round are automatically filled to avoid an NONE type error.
+        Also, here is the observed_decision changed if error is True.
+        """
+        me = player
+        co_player = other_player(player)
+        if timeout_happened:
+            co_player.left_hanging = 1
+            me.left_hanging = 2
+            me.true_decision = 1
+        elif player.participant.condition == '5%' and player.errors == True:
+            me.true_decision = me.observed_decision
+            me.observed_decision = abs(me.true_decision - 1)
+        elif player.participant.condition == '0%' or player.errors == False:
+            me.true_decision = me.observed_decision
 
 
 class ResultsWaitPage(WaitPage):
@@ -220,8 +243,8 @@ class Results(Page):
         me = player
         co_player = other_player(player)
         return {
-            'my_decision': me.decision,
-            'co_player_decision': co_player.decision,
+            'my_decision': me.observed_decision,
+            'co_player_decision': co_player.observed_decision,
             'my_payoff': me.payoff,
         }
 
@@ -253,8 +276,8 @@ class Previous(Page):
         me = player
         co_player = other_player(player)
         return {
-            'my_decision': me.decision,
-            'co_player_decision': co_player.decision,
+            'my_decision': me.true_decision,
+            'co_player_decision': co_player.true_decision,
             'my_payoff': me.payoff,
         }
 
