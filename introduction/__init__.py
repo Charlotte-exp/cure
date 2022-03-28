@@ -38,7 +38,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 
-    errors = models.StringField()
+    condition = models.StringField()
 
 
 # Functions
@@ -51,10 +51,10 @@ def creating_session(subsession):
     """
     treatments = itertools.cycle(['0%', '5%'])
     for p in subsession.get_players():
-        p.errors = next(treatments)
-        p.participant.errors = p.errors
-        # print('errors is', p.errors)
-        # print('vars errors is', p.participant.errors)
+        p.condition = next(treatments)
+        p.participant.condition = p.condition
+        # print('condition is', p.condition)
+        # print('vars condition is', p.participant.condition)
 
 
 # PAGES
@@ -101,5 +101,5 @@ class Instructions(Page):
 page_sequence = [
     Consent,
     # Welcome,
-    Instructions,
+    # Instructions,
 ]

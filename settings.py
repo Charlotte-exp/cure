@@ -20,7 +20,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     doc=""
 )
 
-PARTICIPANT_FIELDS = ['errors', 'last_round', 'left_hanging']
+PARTICIPANT_FIELDS = ['condition', 'last_round', 'left_hanging']
 SESSION_FIELDS = []
 
 # ISO-639 code
