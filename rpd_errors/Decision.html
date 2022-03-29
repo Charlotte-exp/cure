@@ -1,5 +1,5 @@
 {{ block title }}
-    Round Decision
+    Decision
 {{ endblock }}
 
 {{ block styles }}
@@ -30,6 +30,27 @@
 
 {{ block content }}
 
+
+{{ if round_number >= 2 }}
+<div class="card-body small">
+    <div class="card bg-light instructions">
+        <div class="card-body">
+            <p>
+                <h5>In the previous rounds</h5>
+                <p>
+                    You chose to cooperate <b>{{ my_previous_decision }} times</b> and the other player chose to cooperate <b>{{ co_player_previous_decision }} times</b>.
+                </p>
+        </div>
+    </div>
+</div>
+{{ else }}
+
+{{ endif }}
+
+<p>
+
+</p>
+
 <div class="form-group required">
     <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
@@ -37,19 +58,19 @@
             <th colspan="2">The Other's Choice</th>
         </tr>
         <tr>
-            <th><div class="player_box">1</div></th>
-            <th><div class="player_box">2</div></th>
+            <th><div class="player_box">Cooperate</div></th>
+            <th><div class="player_box">Defect</div></th>
         </tr>
         <tr>
             <th rowspan="2"><span>Your Choice</span></th>
-            <td><button name="observed_decision" value="1" class="btn btn-primary btn-large">1</button></td>
+            <td><button name="observed_decision" value="1" class="btn btn-primary btn-large">Cooperate</button></td>
             <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
                 <font color="red">{{C.reward}}</font></div></td>
             <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
                 <font color="red">{{C.temptation}}</font></div></td>
         </tr>
         <tr>
-            <td><button name="observed_decision" value="0" class="btn btn-primary btn-large">2</button></td>
+            <td><button name="observed_decision" value="0" class="btn btn-primary btn-large">Defect</button></td>
             <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
                 <font color="red">{{ C.sucker }}</font></div></td>
             <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
@@ -57,6 +78,8 @@
         </tr>
     </table>
 </div>
+
+
 
 <p style="color:white;">{{ call }}</p>
 

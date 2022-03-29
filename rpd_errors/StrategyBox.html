@@ -1,0 +1,23 @@
+{% block title %}
+    Quick Survey
+{% endblock %}
+
+{% block content %}
+<div class="card-body">
+    <p>
+        We would like to learn about your thought process.
+    </p>
+    <p>
+        Please tell us what was you had in mind while making your decision:
+    </p>
+
+    {% formfield player.strategy_box label='' %}
+</div>
+
+    <p>
+        <div style="display: flex; justify-content: flex-end">
+        {% next_button %}
+        </div>
+    </p>
+
+{% endblock %}

@@ -10,7 +10,7 @@
     padding: 10px;
     border: 2px solid dodgerblue;
     height: 50px;
-    width: 40px;
+    width: 100px;
     border-radius: 5px;
     background: dodgerblue;
     color: white;
@@ -63,22 +63,20 @@ color: white;
 <div>
     <ol>
         <li>
-            In this experiment you will be asked to make decisions in several rounds.
-            You will be randomly paired with another person for a sequence of rounds.
+            In this study, you will be randomly paired with another person for a sequence of rounds (= an interaction).
             You will play with the same person for the entire study.
+            In each round, you and the other participant have to make a choice.
             The bonus you receive will depend on your choice and the choice of the other participant.
             It is cumulative. Your payoff on every round is summed up and paid to you at the end as a bonus.
         </li>
+
         <br>
         <li>
-            The total number of rounds is randomly determined.
-            After each round, there is a {{ delta }}% probability
-            that the interaction with the same person will continue for at least another round.
-            This is as if we would roll a four sided dice: if a 1 or a 2 comes up, the game ends after this round,
-            but if a 3 or 4 comes up, the game continues for at least another round.
-            So, for instance, if you are in round 2,
-            the probability there will be a another round is {{ delta }}% and if you are in round 9,
-            the probability there will be another round is also {{ delta }}%.
+            The interaction will be at least {{ C.min_rounds }} rounds.
+            From the {{ C.min_rounds }}th round, there is a {{ delta }}% probability
+            that the interaction will continue for at one more round.
+            After that round, there will again be a {{ delta }}% chance of yet another round,
+            and after that round, there will again be another {{ delta }}% chance of another round, and so on until the tasks end.
         </li>
         <br>
         <li>
@@ -92,19 +90,19 @@ color: white;
             <th colspan="2">The Other's Choice</th>
         </tr>
         <tr>
-            <th><div class="player_box">1</div></th>
-            <th><div class="player_box">2</div></th>
+            <th><div class="player_box">Cooperate</div></th>
+            <th><div class="player_box">Defect</div></th>
         </tr>
         <tr>
             <th rowspan="2"><div class="white_box">Your Choice</div></th>
-            <td><div class="blue_box">1</div></td>
+            <td><div class="blue_box">Cooperate</div></td>
             <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
                 <font color="red">{{C.reward}}</div></td>
             <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
                 <font color="red">{{C.temptation}}</font></div></td>
         </tr>
         <tr>
-            <td><div class="blue_box">2</div></td>
+            <td><div class="blue_box">Defect</div></td>
             <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
                 <font color="red">{{ C.sucker }}</font></div></td>
             <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
@@ -143,11 +141,14 @@ color: white;
         </li>
     </ul>
     <p>
-        {{ if player.condition == "5%" }}
+        {{ if player.condition == "with_errors" }}
         Sometimes, the choice you or the other participant makes will be recorded wrong.
-        If this happens to you, you will be informed about it, but the other participant will not.
-        Errors occur with a 5% everytime you or the other participant make a choice.
-        As such, over the course of the study, it can happen more than once or never.
+        If you chose to cooperate, there is a chance that it will be implemented as a defection.
+        In case such an error occurs, you will be informed about it, but the other participant will not.
+        In particular, the neither you nor the other participant can be sure
+        whether the choice you observed was the true decision the participant made.
+        These errors occur with a {{ error_rate }}% everytime you or the other participant make a choice.
+        It can be never, once, or several times during the whole study.
         {{ endif }}
     </p>
     <p>

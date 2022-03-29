@@ -29,7 +29,7 @@
     padding: 10px;
     border: 2px solid dodgerblue;
     height: 50px;
-    width: 40px;
+    width: 100px;
     border-radius: 5px;
     background: dodgerblue;
     color: white;
@@ -39,7 +39,7 @@
     padding: 10px;
     border: 2px solid red;
     height: 50px;
-    width: 40px;
+    width: 100px;
     border-radius: 5px;
     background: red;
     color: white;
@@ -77,15 +77,24 @@
 
 <div class="form-group required">
     <p>
-        The other player made the following choice: <b>Option {{ co_player_decision }}</b>
+        {{ if co_player_decision == 1}}
+        The other player chose to: <b>Cooperate</b>
+        {{ else }}
+        The other player chose to: <b>Defect</b>
+        {{ endif }}
     </p>
 
     <div class="screenshot">
     <div class="card-body">
         <p>
-            {{ if errors == True and condition == "5%"}}
-            An error occurred for you on this round. Your choice was <b>Option {{ my_true_decision }}</b>,
-            but the other participant will see <b>Option {{ my_decision }}</b>
+            {{ if errors == True and condition == "with_errors"}}
+                {{ if my_true_decision == 1}}
+                An error occurred for you on this round. Your choice was to cooperate,
+                but instead the other participant will see that you chose to defect.
+                {{ else }}
+                An error occurred for you on this round. Your choice was to defect,
+                but instead the other participant will see that you chose to cooperate.
+                {{ endif }}
             <br>
             Here is the outcome of the round's decision, taking your error into account:
             {{ else }}
@@ -100,19 +109,19 @@
                 <th colspan="2">The Other's Choice</th>
             </tr>
             <tr>
-                <th><div class="red_box">1</div></th>
-                <th><div class="play2_box">2</div></th>
+                <th><div class="red_box">Cooperate</div></th>
+                <th><div class="play2_box">Defect</div></th>
             </tr>
             <tr>
                 <th rowspan="2"><div class="white_box">Your Choice</div></th>
-                <td><div class="blue_box">1</div></td>
+                <td><div class="blue_box">Cooperate</div></td>
                 <td><div class="win_box"><font color="dodgerblue">{{C.reward}}</font>,
                     <font color="red">{{C.reward}}</font></div></td>
                 <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
                     <font color="red">{{C.temptation}}</font></div></td>
             </tr>
             <tr>
-                <td><div class="play1_box">2</div></td>
+                <td><div class="play1_box">Defect</div></td>
                 <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
                     <font color="red">{{ C.sucker }}</font></div></td>
                 <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
@@ -128,19 +137,19 @@
                 <th colspan="2">The Other's Choice</th>
             </tr>
             <tr>
-                <th><div class="play2_box">1</div></th>
-                <th><div class="red_box">2</div></th>
+                <th><div class="play2_box">Cooperate</div></th>
+                <th><div class="red_box">Defect</div></th>
             </tr>
             <tr>
                 <th rowspan="2"><div class="white_box">Your Choice</div></th>
-                <td><div class="blue_box">1</div></td>
+                <td><div class="blue_box">Cooperate</div></td>
                 <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
                     <font color="red">{{C.reward}}</font></div></td>
                 <td><div class="win_box"><font color="dodgerblue">{{ C.sucker }}</font>,
                     <font color="red">{{C.temptation}}</font></div></td>
             </tr>
             <tr>
-                <td><div class="play1_box">2</div></td>
+                <td><div class="play1_box">Defect</div></td>
                 <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
                     <font color="red">{{ C.sucker }}</font></div></td>
                 <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
@@ -156,19 +165,19 @@
                 <th colspan="2">The Other's Choice</th>
             </tr>
             <tr>
-                <th><div class="red_box">1</div></th>
-                <th><div class="play2_box">2</div></th>
+                <th><div class="red_box">Cooperate</div></th>
+                <th><div class="play2_box">Defect</div></th>
             </tr>
             <tr>
                 <th rowspan="2"><div class="white_box">Your Choice</div></th>
-                <td><div class="play1_box">1</div></td>
+                <td><div class="play1_box">Cooperate</div></td>
                 <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
                     <font color="red">{{C.reward}}</div></td>
                 <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
                     <font color="red">{{C.temptation}}</font></div></td>
             </tr>
             <tr>
-                <td><div class="blue_box">2</div></td>
+                <td><div class="blue_box">Defect</div></td>
                 <td><div class="win_box"><font color="dodgerblue">{{C.temptation}}</font>,
                     <font color="red">{{ C.sucker }}</font></div></td>
                 <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
@@ -184,19 +193,19 @@
                 <th colspan="2">The Other's Choice</th>
             </tr>
             <tr>
-                <th><div class="play2_box">1</div></th>
-                <th><div class="red_box">2</div></th>
+                <th><div class="play2_box">Cooperate</div></th>
+                <th><div class="red_box">Defect</div></th>
             </tr>
             <tr>
                 <th rowspan="2"><div class="pwhite_box">Your Choice</div></th>
-                <td><div class="play1_box">1</div></td>
+                <td><div class="play1_box">Cooperate</div></td>
                 <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
                     <font color="red">{{C.reward}}</div></td>
                 <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
                     <font color="red">{{C.temptation}}</font></div></td>
             </tr>
             <tr>
-                <td><div class="blue_box">2</div></td>
+                <td><div class="blue_box">Defect</div></td>
                 <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
                     <font color="red">{{ C.sucker }}</font></div></td>
                 <td><div class="win_box"><font color="dodgerblue">{{C.punishment}}</font>,
@@ -209,7 +218,7 @@
 </div>
 
     <p>
-        {{ if errors == True and condition == "5%"}}
+        {{ if errors == True and condition == "with_errors"}}
         Remember, the other participant does not know an error occurred.
         {{ endif }}
     </p>
