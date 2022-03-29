@@ -13,7 +13,7 @@ class C(BaseConstants):
     NUM_ROUNDS = 50
 
     """ variables for randomish end round, used in the intro app at the mo"""
-    min_rounds = 2
+    min_rounds = 3
     proba_next_round = 0.50
 
     error_rate = 0.50
@@ -54,11 +54,19 @@ class Player(BasePlayer):
     last_round = models.IntegerField()
     left_hanging = models.IntegerField(initial=0)
 
+    comment_box = models.LongStringField(
+        verbose_name=''
+    )
+
+    strategy_box = models.LongStringField(
+        verbose_name=''
+    )
+
     true_decision = models.IntegerField()
     observed_decision = models.IntegerField(
             choices=[
-                [1, '1'],
-                [0, '2'],
+                [1, 'Cooperate'],
+                [0, 'Defect'],
             ],
             doc="""This player's true_decision""",
             widget=widgets.RadioSelect
@@ -69,7 +77,7 @@ class Player(BasePlayer):
         on every round, this function is called.
         A random number is drawn and if it is smaller than 0.05 then the field 'errors' is set to True.
         """
-        if C.error_rate > random.random():
+        if C.error_rate > random.random() and player.participant.condition == "with_errors":
             player.errors = True
             print("error is", player.errors)
         return player.errors
@@ -78,16 +86,16 @@ class Player(BasePlayer):
 ### FUNCTIONS
 
 def group_by_arrival_time_method(subsession, waiting_players):
-    players_zero = [p for p in waiting_players if p.participant.condition == '0%']
-    players_five = [p for p in waiting_players if p.participant.condition == '5%']
-    if len(players_zero) >= 1 and len(players_five) >= 1:
-        players = [players_zero[0], players_five[0]]
-        last_round = subsession.get_random_number_of_rounds()
-        print(players)
-        for p in players:
-            p.participant.last_round = last_round
-            p.last_round = p.participant.last_round
-        return players
+    players_zero = [p for p in waiting_players if p.participant.condition == 'no_errors']
+    players_five = [p for p in waiting_players if p.participant.condition == 'with_errors']
+    for player_list in [players_zero, players_five]:
+        if len(player_list) >= 2:
+            players = [player_list[0], player_list[1]]
+            last_round = subsession.get_random_number_of_rounds()
+            for p in players:
+                p.participant.last_round = last_round
+                p.last_round = p.participant.last_round
+            return players
 
 
 def other_player(player: Player):
@@ -144,7 +152,7 @@ class Decision(Page):
     form_fields = ['observed_decision']
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    timeout_seconds = 2 * 60
+    timeout_seconds = 12 * 60
 
     def is_displayed(player: Player):
         """
@@ -167,8 +175,8 @@ class Decision(Page):
             return {
                 'call': player.get_errors(),
                 'round_number': player.round_number,
-                'co_player_previous_decision': co_player.in_round(player.round_number - 1).true_decision,
-                'previous_decision': me.in_round(player.round_number - 1).true_decision,
+                'my_previous_decision': sum([p.observed_decision for p in player.in_previous_rounds()]),
+                'co_player_previous_decision': sum([p.observed_decision for p in player.in_previous_rounds()]),
             }
         else:
             return {
@@ -189,11 +197,11 @@ class Decision(Page):
         if timeout_happened:
             co_player.left_hanging = 1
             me.left_hanging = 2
-            me.true_decision = 1
-        elif player.participant.condition == '5%' and player.errors == True:
+            me.field_maybe_none("observed_decision")
+        elif player.participant.condition == 'with_errors' and player.errors == True:
             me.true_decision = me.observed_decision
             me.observed_decision = abs(me.true_decision - 1)
-        elif player.participant.condition == '0%' or player.errors == False:
+        elif player.participant.condition == 'no_errors' or player.errors == False:
             me.true_decision = me.observed_decision
 
 
@@ -233,7 +241,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next results summary page'
-    timeout_seconds = 2 * 60
+    timeout_seconds = 12 * 60
 
     def vars_for_template(player: Player):
         """
@@ -244,41 +252,10 @@ class Results(Page):
         co_player = other_player(player)
         return {
             'my_decision': me.observed_decision,
+            'my_true_decision': me.true_decision,
             'co_player_decision': co_player.observed_decision,
-            'my_payoff': me.payoff,
-        }
-
-
-class Previous(Page):
-    """
-    This page is a reminder of what happened in the previous round.
-    It has a timer so that a dropout is automatically pushed to the decision page where the dropout function is.
-    """
-
-    def is_displayed(player: Player):
-        """
-        This page is displayed only if the player is neither left hanging (1) or a dropout (2).
-        And only for the number of rounds assigned to the group by the random number function.
-        """
-        if player.left_hanging == 1 or player.left_hanging == 2:
-            return False
-        elif player.round_number <= player.participant.last_round:
-            return True
-
-    timer_text = 'You are about to be automatically moved to the next round decision page'
-    timeout_seconds = 1 * 60
-
-    def vars_for_template(player: Player):
-        """
-        This function is for displaying variables in the HTML file using Django.
-        The variables are inserted into calculation or specifications and given a display name used in the HTML.
-        """
-        me = player
-        co_player = other_player(player)
-        return {
-            'my_decision': me.true_decision,
-            'co_player_decision': co_player.true_decision,
-            'my_payoff': me.payoff,
+            'errors': me.errors,
+            'condition': me.participant.condition,
         }
 
 
@@ -320,6 +297,18 @@ class Demographics(Page):
         This page is displayed only if the player is neither left hanging (1) or a dropout (2).
         And only appears on the last round.
         """
+        if player.left_hanging == 1 or player.left_hanging == 2:
+            return False
+        elif player.round_number == player.participant.last_round:
+            return True
+
+
+class StrategyBox(Page):
+    form_model = 'player'
+    form_fields = ['strategy_box']
+
+    def is_displayed(player: Player):
+        """ This function makes the page appear only on the last random-ish round """
         if player.left_hanging == 1 or player.left_hanging == 2:
             return False
         elif player.round_number == player.participant.last_round:
@@ -404,10 +393,10 @@ page_sequence = [
     Decision,
     ResultsWaitPage,
     Results,
-    # Previous,
     End,
     # Demographics,
-    # CommentBox,
+    StrategyBox,
+    CommentBox,
     Payment,
     LeftHanging,
     ProlificLink,

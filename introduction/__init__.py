@@ -12,8 +12,11 @@ class C(BaseConstants):
     NAME_IN_URL = 'introduction'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    min_rounds = 1
+
+    min_rounds = 20
     proba_next_round = 0.50
+
+    error_rate = 0.50
 
     session_time = 15
     conversion = '20pts = £0.05'
@@ -49,7 +52,7 @@ def creating_session(subsession):
     session but also that is it equally distributed in the sample. (So pp don't have to wait to long get matched
     in a pair. It simply cycles through the list of treatments (high & low) and that's saved in the participant vars.
     """
-    treatments = itertools.cycle(['0%', '5%'])
+    treatments = itertools.cycle(['no_errors', 'with_errors'])
     for p in subsession.get_players():
         p.condition = next(treatments)
         p.participant.condition = p.condition
@@ -69,17 +72,9 @@ class Consent(Page):
 
 
 class Welcome(Page):
-    form_model = 'player'
-    form_fields = ['q1', 'q2']
 
     def is_displayed(player: Player):
         return player.round_number == 1
-
-    def error_message(player, values):
-        if values['q1'] != 2:
-            return 'Answer to question 1 is incorrect. Check the instructions again and give a new answer'
-        if values['q2'] != 3:
-            return 'Answer to question 2 is incorrect. Check the instructions again and give a new answer'
 
 
 class Instructions(Page):
@@ -94,12 +89,13 @@ class Instructions(Page):
         """
         return {
             'currency_per_points': player.session.config['real_world_currency_per_point'],
-            'delta': math.ceil(C.proba_next_round * 100)
+            'error_rate': math.ceil(C.error_rate * 100),
+            'delta': math.ceil(C.proba_next_round * 100),
         }
 
 
 page_sequence = [
     Consent,
     # Welcome,
-    # Instructions,
+    Instructions,
 ]
