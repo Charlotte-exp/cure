@@ -65,6 +65,9 @@ color: white;
         <li>
             In this experiment you will be asked to make decisions in several rounds.
             You will be randomly paired with another person for a sequence of rounds.
+            You will play with the same person for the entire study.
+            The bonus you receive will depend on your choice and the choice of the other participant.
+            It is cumulative. Your payoff on every round is summed up and paid to you at the end as a bonus.
         </li>
         <br>
         <li>
@@ -82,7 +85,6 @@ color: white;
             The choices and the payoffs in each round are as follows:
         </li>
     </ol>
-
     <div class="form-group required">
         <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
@@ -110,7 +112,6 @@ color: white;
         </tr>
         </table>
     </div>
-
     <br>
     <p>
         The first entry in each cell represents your payoff,
@@ -118,13 +119,11 @@ color: white;
         You make your choice by clicking directly on the blue box titled 1 for Option 1,
         and 2 for Option 2.
     </p>
-
     <p>
         As you can see, this shows the payoff associated with each choice.
         Once you and the person you are paired with have made your choices,
         your payoff for the round will appear.
     </p>
-
     <p>
         That is, if:
     </p>
@@ -143,7 +142,6 @@ color: white;
             You select 2 and the other selects 2, you each make <b>{{C.punishment}}</b>.
         </li>
     </ul>
-
     <p>
         {{ if player.condition == "5%" }}
         Sometimes, the choice you or the other participant makes will be recorded wrong.
@@ -152,7 +150,6 @@ color: white;
         As such, over the course of the study, it can happen more than once or never.
         {{ endif }}
     </p>
-
     <p>
         Before we start, recall again that the total number of rounds is randomly determined.
         After each round, there is a {{ delta }}% probability that the interaction will continue for at least another round.

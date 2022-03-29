@@ -13,7 +13,7 @@ class C(BaseConstants):
     NUM_ROUNDS = 50
 
     """ variables for randomish end round, used in the intro app at the mo"""
-    min_rounds = 2
+    min_rounds = 3
     proba_next_round = 0.50
 
     error_rate = 0.50
@@ -144,7 +144,7 @@ class Decision(Page):
     form_fields = ['observed_decision']
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    timeout_seconds = 2 * 60
+    timeout_seconds = 12 * 60
 
     def is_displayed(player: Player):
         """

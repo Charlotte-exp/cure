@@ -92,6 +92,6 @@ class Instructions(Page):
 
 page_sequence = [
     Consent,
-    Welcome,
+    # Welcome,
     Instructions,
 ]
