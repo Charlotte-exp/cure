@@ -69,7 +69,7 @@ class Player(BasePlayer):
         on every round, this function is called.
         A random number is drawn and if it is smaller than 0.05 then the field 'errors' is set to True.
         """
-        if C.error_rate > random.random():
+        if C.error_rate > random.random() and player.participant.condition == "5%":
             player.errors = True
             print("error is", player.errors)
         return player.errors
@@ -189,7 +189,7 @@ class Decision(Page):
         if timeout_happened:
             co_player.left_hanging = 1
             me.left_hanging = 2
-            me.true_decision = 1
+            me.observed_decision = 1
         elif player.participant.condition == '5%' and player.errors == True:
             me.true_decision = me.observed_decision
             me.observed_decision = abs(me.true_decision - 1)
@@ -233,7 +233,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next results summary page'
-    timeout_seconds = 2 * 60
+    timeout_seconds = 12 * 60
 
     def vars_for_template(player: Player):
         """
@@ -244,8 +244,11 @@ class Results(Page):
         co_player = other_player(player)
         return {
             'my_decision': me.observed_decision,
+            'my_true_decision': me.true_decision,
             'co_player_decision': co_player.observed_decision,
             'my_payoff': me.payoff,
+            'errors': me.errors,
+            'condition': me.participant.condition,
         }
 
 

@@ -66,28 +66,23 @@ color: white;
             In this experiment you will be asked to make decisions in several rounds.
             You will be randomly paired with another person for a sequence of rounds.
         </li>
-        <p></p>
+        <br>
         <li>
             The total number of rounds is randomly determined.
             After each round, there is a {{ delta }}% probability
             that the interaction with the same person will continue for at least another round.
-            {{ if C.proba_next_round == 0.5 }}
             This is as if we would roll a four sided dice: if a 1 or a 2 comes up, the game ends after this round,
             but if a 3 or 4 comes up, the game continues for at least another round.
-            {{ endif }}
-            {{ if C.proba_next_round == 0.75 }}
-            This is as if we would roll a four sided dice: if a 1 comes up, the game ends after this round,
-            but if a 2, 3, or 4 comes up, the game continues for at least another round.
-            {{ endif }}
             So, for instance, if you are in round 2,
             the probability there will be a another round is {{ delta }}% and if you are in round 9,
             the probability there will be another round is also {{ delta }}%.
         </li>
-        <p></p>
+        <br>
         <li>
             The choices and the payoffs in each round are as follows:
         </li>
     </ol>
+
     <div class="form-group required">
         <table class="table table-bordered text-center" style="width: auto; margin: auto">
         <tr>
@@ -115,21 +110,21 @@ color: white;
         </tr>
         </table>
     </div>
+
     <br>
     <p>
-        The first entry in each cell represents your payoff (in points),
+        The first entry in each cell represents your payoff,
         while the second entry represents the payoff of the person you are interacting with.
         You make your choice by clicking directly on the blue box titled 1 for Option 1,
         and 2 for Option 2.
     </p>
-    <p>
-        At the end of the experiment you will be paid £{{ currency_per_points }} for every point scored for your bonus.
-    </p>
+
     <p>
         As you can see, this shows the payoff associated with each choice.
         Once you and the person you are paired with have made your choices,
         your payoff for the round will appear.
     </p>
+
     <p>
         That is, if:
     </p>
@@ -148,12 +143,21 @@ color: white;
             You select 2 and the other selects 2, you each make <b>{{C.punishment}}</b>.
         </li>
     </ul>
+
+    <p>
+        {{ if player.condition == "5%" }}
+        Sometimes, the choice you or the other participant makes will be recorded wrong.
+        If this happens to you, you will be informed about it, but the other participant will not.
+        Errors occur with a 5% everytime you or the other participant make a choice.
+        As such, over the course of the study, it can happen more than once or never.
+        {{ endif }}
+    </p>
+
     <p>
         Before we start, recall again that the total number of rounds is randomly determined.
         After each round, there is a {{ delta }}% probability that the interaction will continue for at least another round.
         You will play with the same person for the entire interaction.
     </p>
-
 </div>
 
     <p>

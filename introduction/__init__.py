@@ -69,17 +69,9 @@ class Consent(Page):
 
 
 class Welcome(Page):
-    form_model = 'player'
-    form_fields = ['q1', 'q2']
 
     def is_displayed(player: Player):
         return player.round_number == 1
-
-    def error_message(player, values):
-        if values['q1'] != 2:
-            return 'Answer to question 1 is incorrect. Check the instructions again and give a new answer'
-        if values['q2'] != 3:
-            return 'Answer to question 2 is incorrect. Check the instructions again and give a new answer'
 
 
 class Instructions(Page):
@@ -100,6 +92,6 @@ class Instructions(Page):
 
 page_sequence = [
     Consent,
-    # Welcome,
-    # Instructions,
+    Welcome,
+    Instructions,
 ]

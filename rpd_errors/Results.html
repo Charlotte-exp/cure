@@ -15,6 +15,16 @@
 
     <style>
     /* (A) SHARED CLASS */
+
+    .screenshot {
+    background: white;
+    border: 1px solid #3b84c3;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #999;
+    /*width: 940px; */
+    margin: 22px auto;
+    }
+
     .blue_box {
     padding: 10px;
     border: 2px solid dodgerblue;
@@ -67,120 +77,142 @@
 
 <div class="form-group required">
     <p>
-        The other player made the following choice:
+        The other player made the following choice: <b>Option {{ co_player_decision }}</b>
     </p>
-{{ if my_decision == 1 and co_player_decision == 1 }}
-    <table class="table table-bordered text-center" style="width: auto; margin: auto">
-        <tr>
-            <th colspan="2" rowspan="2"></th>
-            <th colspan="2">The Other's Choice</th>
-        </tr>
-        <tr>
-            <th><div class="red_box">1</div></th>
-            <th><div class="play2_box">2</div></th>
-        </tr>
-        <tr>
-            <th rowspan="2"><div class="white_box">Your Choice</div></th>
-            <td><div class="blue_box">1</div></td>
-            <td><div class="win_box"><font color="dodgerblue">{{C.reward}}</font>,
-                <font color="red">{{C.reward}}</font></div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
-                <font color="red">{{C.temptation}}</font></div></td>
-        </tr>
-        <tr>
-            <td><div class="play1_box">2</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
-                <font color="red">{{ C.sucker }}</font></div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
-                <font color="red">{{C.punishment}}</font></div></td>
-        </tr>
-    </table>
-{{ endif }}
 
-{{ if my_decision == 1 and co_player_decision == 0 }}
-    <table class="table table-bordered text-center" style="width: auto; margin: auto">
-        <tr>
-            <th colspan="2" rowspan="2"></th>
-            <th colspan="2">The Other's Choice</th>
-        </tr>
-        <tr>
-            <th><div class="play2_box">1</div></th>
-            <th><div class="red_box">2</div></th>
-        </tr>
-        <tr>
-            <th rowspan="2"><div class="white_box">Your Choice</div></th>
-            <td><div class="blue_box">1</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
-                <font color="red">{{C.reward}}</font></div></td>
-            <td><div class="win_box"><font color="dodgerblue">{{ C.sucker }}</font>,
-                <font color="red">{{C.temptation}}</font></div></td>
-        </tr>
-        <tr>
-            <td><div class="play1_box">2</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
-                <font color="red">{{ C.sucker }}</font></div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
-                <font color="red">{{C.punishment}}</font></div></td>
-        </tr>
-    </table>
-{{ endif }}
+    <div class="screenshot">
+    <div class="card-body">
+        <p>
+            {{ if errors == True and condition == "5%"}}
+            An error occurred for you on this round. Your choice was <b>Option {{ my_true_decision }}</b>,
+            but the other participant will see <b>Option {{ my_decision }}</b>
+            <br>
+            Here is the outcome of the round's decision, taking your error into account:
+            {{ else }}
+            Here is the outcome of the round's decision:
+            {{ endif }}
+        </p>
 
-{{ if my_decision == 0 and co_player_decision == 1 }}
-    <table class="table table-bordered text-center" style="width: auto; margin: auto">
-        <tr>
-            <th colspan="2" rowspan="2"></th>
-            <th colspan="2">The Other's Choice</th>
-        </tr>
-        <tr>
-            <th><div class="red_box">1</div></th>
-            <th><div class="play2_box">2</div></th>
-        </tr>
-        <tr>
-            <th rowspan="2"><div class="white_box">Your Choice</div></th>
-            <td><div class="play1_box">1</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
-                <font color="red">{{C.reward}}</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
-                <font color="red">{{C.temptation}}</font></div></td>
-        </tr>
-        <tr>
-            <td><div class="blue_box">2</div></td>
-            <td><div class="win_box"><font color="dodgerblue">{{C.temptation}}</font>,
-                <font color="red">{{ C.sucker }}</font></div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
-                <font color="red">{{C.punishment}}</font></div></td>
-        </tr>
-    </table>
-{{ endif }}
+    {{ if my_decision == 1 and co_player_decision == 1 }}
+        <table class="table table-bordered text-center" style="width: auto; margin: auto">
+            <tr>
+                <th colspan="2" rowspan="2"></th>
+                <th colspan="2">The Other's Choice</th>
+            </tr>
+            <tr>
+                <th><div class="red_box">1</div></th>
+                <th><div class="play2_box">2</div></th>
+            </tr>
+            <tr>
+                <th rowspan="2"><div class="white_box">Your Choice</div></th>
+                <td><div class="blue_box">1</div></td>
+                <td><div class="win_box"><font color="dodgerblue">{{C.reward}}</font>,
+                    <font color="red">{{C.reward}}</font></div></td>
+                <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
+                    <font color="red">{{C.temptation}}</font></div></td>
+            </tr>
+            <tr>
+                <td><div class="play1_box">2</div></td>
+                <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
+                    <font color="red">{{ C.sucker }}</font></div></td>
+                <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
+                    <font color="red">{{C.punishment}}</font></div></td>
+            </tr>
+        </table>
+    {{ endif }}
 
-{{ if my_decision == 0 and co_player_decision == 0 }}
-    <table class="table table-bordered text-center" style="width: auto; margin: auto">
-        <tr>
-            <th colspan="2" rowspan="2"></th>
-            <th colspan="2">The Other's Choice</th>
-        </tr>
-        <tr>
-            <th><div class="play2_box">1</div></th>
-            <th><div class="red_box">2</div></th>
-        </tr>
-        <tr>
-            <th rowspan="2"><div class="pwhite_box">Your Choice</div></th>
-            <td><div class="play1_box">1</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
-                <font color="red">{{C.reward}}</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
-                <font color="red">{{C.temptation}}</font></div></td>
-        </tr>
-        <tr>
-            <td><div class="blue_box">2</div></td>
-            <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
-                <font color="red">{{ C.sucker }}</font></div></td>
-            <td><div class="win_box"><font color="dodgerblue">{{C.punishment}}</font>,
-                <font color="red">{{C.punishment}}</font></div></td>
-        </tr>
-    </table>
-{{ endif }}
+    {{ if my_decision == 1 and co_player_decision == 0 }}
+        <table class="table table-bordered text-center" style="width: auto; margin: auto">
+            <tr>
+                <th colspan="2" rowspan="2"></th>
+                <th colspan="2">The Other's Choice</th>
+            </tr>
+            <tr>
+                <th><div class="play2_box">1</div></th>
+                <th><div class="red_box">2</div></th>
+            </tr>
+            <tr>
+                <th rowspan="2"><div class="white_box">Your Choice</div></th>
+                <td><div class="blue_box">1</div></td>
+                <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
+                    <font color="red">{{C.reward}}</font></div></td>
+                <td><div class="win_box"><font color="dodgerblue">{{ C.sucker }}</font>,
+                    <font color="red">{{C.temptation}}</font></div></td>
+            </tr>
+            <tr>
+                <td><div class="play1_box">2</div></td>
+                <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
+                    <font color="red">{{ C.sucker }}</font></div></td>
+                <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
+                    <font color="red">{{C.punishment}}</font></div></td>
+            </tr>
+        </table>
+    {{ endif }}
+
+    {{ if my_decision == 0 and co_player_decision == 1 }}
+        <table class="table table-bordered text-center" style="width: auto; margin: auto">
+            <tr>
+                <th colspan="2" rowspan="2"></th>
+                <th colspan="2">The Other's Choice</th>
+            </tr>
+            <tr>
+                <th><div class="red_box">1</div></th>
+                <th><div class="play2_box">2</div></th>
+            </tr>
+            <tr>
+                <th rowspan="2"><div class="white_box">Your Choice</div></th>
+                <td><div class="play1_box">1</div></td>
+                <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
+                    <font color="red">{{C.reward}}</div></td>
+                <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
+                    <font color="red">{{C.temptation}}</font></div></td>
+            </tr>
+            <tr>
+                <td><div class="blue_box">2</div></td>
+                <td><div class="win_box"><font color="dodgerblue">{{C.temptation}}</font>,
+                    <font color="red">{{ C.sucker }}</font></div></td>
+                <td><div class="white_box"><font color="dodgerblue">{{C.punishment}}</font>,
+                    <font color="red">{{C.punishment}}</font></div></td>
+            </tr>
+        </table>
+    {{ endif }}
+
+    {{ if my_decision == 0 and co_player_decision == 0 }}
+        <table class="table table-bordered text-center" style="width: auto; margin: auto">
+            <tr>
+                <th colspan="2" rowspan="2"></th>
+                <th colspan="2">The Other's Choice</th>
+            </tr>
+            <tr>
+                <th><div class="play2_box">1</div></th>
+                <th><div class="red_box">2</div></th>
+            </tr>
+            <tr>
+                <th rowspan="2"><div class="pwhite_box">Your Choice</div></th>
+                <td><div class="play1_box">1</div></td>
+                <td><div class="white_box"><font color="dodgerblue">{{C.reward}}</font>,
+                    <font color="red">{{C.reward}}</div></td>
+                <td><div class="white_box"><font color="dodgerblue">{{ C.sucker }}</font>,
+                    <font color="red">{{C.temptation}}</font></div></td>
+            </tr>
+            <tr>
+                <td><div class="blue_box">2</div></td>
+                <td><div class="white_box"><font color="dodgerblue">{{C.temptation}}</font>,
+                    <font color="red">{{ C.sucker }}</font></div></td>
+                <td><div class="win_box"><font color="dodgerblue">{{C.punishment}}</font>,
+                    <font color="red">{{C.punishment}}</font></div></td>
+            </tr>
+        </table>
+    {{ endif }}
+    </div>
+    </div>
 </div>
+
+    <p>
+        {{ if errors == True and condition == "5%"}}
+        Remember, the other participant does not know an error occurred.
+        {{ endif }}
+    </p>
 
 <p>
     <div style="display: flex; justify-content: flex-end">
