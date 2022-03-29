@@ -18,8 +18,6 @@ class C(BaseConstants):
 
     error_rate = 0.50
 
-    conversion = '20pts = £0.05'
-
     """
     Matrix format payoffs
     temptation = betray, sucker = betrayed, reward = both cooperate, punishment = both defect 

@@ -18,8 +18,7 @@ class C(BaseConstants):
 
     error_rate = 0.50
 
-    session_time = 15
-    conversion = '20pts = £0.05'
+    session_time = 12
 
     """
     Matrix format payoffs
