@@ -1,4 +1,5 @@
 from os import environ
+from os import popen
 
 SESSION_CONFIGS = [
     dict(
@@ -6,6 +7,8 @@ SESSION_CONFIGS = [
         display_name="Repeated PD with errors",
         app_sequence=['introduction', 'rpd_errors'],
         num_demo_participants=12,
+        use_browser_bots=False,
+        oTree_version_used=popen('otree --version').read().strip()
     ),
 ]
 
@@ -37,7 +40,8 @@ ROOMS = [
         display_name='Econ 101 class',
         participant_label_file='_rooms/econ101.txt',
     ),
-    dict(name='live_demo', display_name='Room for live demo (no participant labels)'),
+    dict(name='live_demo',
+         display_name='Room for live demo (no participant labels)'),
 ]
 
 ADMIN_USERNAME = 'charlotte'

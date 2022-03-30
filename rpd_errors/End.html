@@ -12,21 +12,17 @@
         <tr>
             <th>Round</th>
             <th>My outcome</th>
-            <th>Other player's outcome</th>
+            <th>Total</th>
 
         </tr>
         {{ for p in player_in_all_rounds }}
             <tr>
                 <td>{{ p.round_number }}</td>
                 <td>{{ p.payoff }}</td>
-                <td>{{ p.payoff }}</td>
-            </tr>
         {{ endfor }}
+                <td><b>{{ total_payoff }}</b></td>
+            </tr>
     </table>
-
-    <p>
-        In this Task, across all rounds, you earned a total of <b>{{ total_payoff }}</b> points.
-    </p>
 </div>
 
     <p>

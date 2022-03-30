@@ -150,7 +150,7 @@ class Decision(Page):
     form_fields = ['observed_decision']
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    timeout_seconds = 12 * 60
+    timeout_seconds = 1 * 60
 
     def is_displayed(player: Player):
         """
@@ -173,8 +173,8 @@ class Decision(Page):
             return {
                 'call': player.get_errors(),
                 'round_number': player.round_number,
-                'my_previous_decision': sum([p.observed_decision for p in player.in_previous_rounds()]),
-                'co_player_previous_decision': sum([p.observed_decision for p in player.in_previous_rounds()]),
+                'my_previous_decision': sum([p.observed_decision for p in me.in_previous_rounds()]),
+                'co_player_previous_decision': sum([p.observed_decision for p in co_player.in_previous_rounds()]),
             }
         else:
             return {
@@ -195,7 +195,7 @@ class Decision(Page):
         if timeout_happened:
             co_player.left_hanging = 1
             me.left_hanging = 2
-            me.field_maybe_none("observed_decision")
+            me.observed_decision = 1
         elif player.participant.condition == 'with_errors' and player.errors == True:
             me.true_decision = me.observed_decision
             me.observed_decision = abs(me.true_decision - 1)
@@ -239,7 +239,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next results summary page'
-    timeout_seconds = 12 * 60
+    timeout_seconds = 1 * 60
 
     def vars_for_template(player: Player):
         """
