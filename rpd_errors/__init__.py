@@ -13,10 +13,10 @@ class C(BaseConstants):
     NUM_ROUNDS = 50
 
     """ variables for randomish end round, used in the intro app at the mo"""
-    min_rounds = 3
+    min_rounds = 5
     proba_next_round = 0.50
 
-    error_rate = 0.50
+    error_rate = 0.10
 
     """
     Matrix format payoffs
@@ -150,7 +150,7 @@ class Decision(Page):
     form_fields = ['observed_decision']
 
     timer_text = 'If you stay inactive for too long you will be considered a dropout:'
-    timeout_seconds = 1 * 60
+    timeout_seconds = 2 * 60
 
     def is_displayed(player: Player):
         """
@@ -239,7 +239,7 @@ class Results(Page):
             return True
 
     timer_text = 'You are about to be automatically moved to the next results summary page'
-    timeout_seconds = 1 * 60
+    timeout_seconds = 2 * 60
 
     def vars_for_template(player: Player):
         """
