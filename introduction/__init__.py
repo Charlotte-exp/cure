@@ -15,6 +15,7 @@ class C(BaseConstants):
 
     min_rounds = 20
     proba_next_round = 0.50
+    max_bonus = cu(5)
 
     error_rate = 0.50
 
