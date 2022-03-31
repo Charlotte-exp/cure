@@ -17,7 +17,7 @@ class C(BaseConstants):
     proba_next_round = 0.50
     max_bonus = cu(5)
 
-    error_rate = 0.50
+    error_rate = 0.10
 
     session_time = 12
 
