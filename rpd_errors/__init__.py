@@ -13,8 +13,9 @@ class C(BaseConstants):
     NUM_ROUNDS = 50
 
     """ variables for randomish end round, used in the intro app at the mo"""
-    min_rounds = 5
+    min_rounds = 20
     proba_next_round = 0.50
+    max_bonus = cu(5)
 
     error_rate = 0.10
 
@@ -77,7 +78,7 @@ class Player(BasePlayer):
         """
         if C.error_rate > random.random() and player.participant.condition == "with_errors":
             player.errors = True
-            print("error is", player.errors)
+            # print("error is", player.errors)
         return player.errors
 
 

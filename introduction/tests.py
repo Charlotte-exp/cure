@@ -7,7 +7,7 @@ class PlayerBot(Bot):
         if self.round_number == 1:
             yield Consent
             # yield Welcome
-            yield Instructions
+            yield Instructions, {"q1": '2', "q2": '4', "q3": '2' }
 
 
 

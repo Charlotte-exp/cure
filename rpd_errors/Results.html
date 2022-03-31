@@ -87,19 +87,19 @@
     <div class="screenshot">
     <div class="card-body">
         <p>
-            {{ if errors == True and condition == "with_errors"}}
-                {{ if my_true_decision == 1}}
-                An error occurred for you on this round. Your choice was to cooperate,
-                but instead the other participant will see that you chose to defect.
-                {{ else }}
-                An error occurred for you on this round. Your choice was to defect,
-                but instead the other participant will see that you chose to cooperate.
-                {{ endif }}
+        {{ if errors == True and condition == "with_errors"}}
+            {{ if my_true_decision == 1}}
+            An error occurred for you on this round. Your choice was to cooperate, but instead you defected.
+            The other participant will only see that you defected, not that you intended to cooperate.
+            {{ else }}
+            An error occurred for you on this round. Your choice was to defect, but instead you cooperated.
+            The other participant will only see that you cooperated, not that you intended to defect.
+            {{ endif }}
             <br>
             Here is the outcome of the round's decision, taking your error into account:
-            {{ else }}
+        {{ else }}
             Here is the outcome of the round's decision:
-            {{ endif }}
+        {{ endif }}
         </p>
 
     {{ if my_decision == 1 and co_player_decision == 1 }}

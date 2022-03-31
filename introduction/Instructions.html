@@ -74,7 +74,7 @@ color: white;
         <li>
             The interaction will be at least {{ C.min_rounds }} rounds.
             From the {{ C.min_rounds }}th round, there is a {{ delta }}% probability
-            that the interaction will continue for at one more round.
+            that the interaction will continue for another round.
             After that round, there will again be a {{ delta }}% chance of yet another round,
             and after that round, there will again be another {{ delta }}% chance of another round, and so on until the tasks end.
         </li>
@@ -118,7 +118,7 @@ color: white;
             or <b>Defect</b>.
         </p>
         <p>
-            As you can see, this shows the payoff associated with each choice.
+            The table shows the payoff associated with each choice.
             Once you and the person you are paired with have made your choices,
             your payoff for the round will appear.
         </p>
@@ -145,19 +145,28 @@ color: white;
         <li>
             Sometimes, the choice you or the other participant makes will be recorded wrong.
             For example, if you chose to cooperate, there is a chance that it will be implemented as a defection.
+            Conversely, if you chose to defect, there is a chance it will be implemented as a cooperation.
             In case such an error occurs, you will be informed about it, but the other participant will not.
-            In particular, neither you nor the other participant can be sure
-            whether the choice you observed was the true decision the participant made.
-            These errors occur with a {{ error_rate }}% everytime you or the other participant make a choice.
-            This can be never, once, or several times during the whole study.
+            In particular, the other participant will only learn the decision that was eventually implemented for you,
+            not the decision you intended to make.
+            Therefore participants cannot be sure whether the observed choices of the other participant
+            are the other participant's true decision or the result of an unintended error.
+            Errors occur with a {{ error_rate }}% probability every time you or the other participant make a choice.
+            Over the course of the whole study, such errors may occur never, once, or several times.
         </li>
     {{ endif }}
     </ol>
     <p>
-        Before we start, recall again that the total number of rounds is randomly determined.
-        After each round, there is a {{ delta }}% probability that the interaction will continue for at least another round.
+        Before we start, recall again that the total number of rounds is at least {{ C.min_rounds }}. After that,
+        there is a {{ delta }}% chance each round that the current interaction is the last.
         You will play with the same person for the entire interaction.
     </p>
+</div>
+    <br>
+    <hr size="6" width="100%" align="center" color="black">
+<div>
+    <h4>Please answer the following questions to start the interaction:</h4>
+    {{ formfields }}
 </div>
 
     <p>
