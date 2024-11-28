@@ -40,7 +40,7 @@ This package is supported for *macOS*, *Windows, and *Linux*. The package has be
 + macOS: Catalina (10.15.7)
 
 
-# Installation Guide:
+# Installation Guide:Read
 
 ## Installing Python
 Download the latest python 3 version at https://www.python.org/downloads/ and follow the official instructions.
